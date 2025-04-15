@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>IceQuill Writers Application</title>
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial Rounded MT Bold', Arial, sans-serif;
+    }
+    body {
+      background: linear-gradient(135deg, #6d3c9c, #4b2869);
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+    @keyframes shine {
+      0% { background-position: -200px; }
+      100% { background-position: 200px; }
+    }
+    h1 {
+      color: #4b2869;
+      text-align: center;
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      background: linear-gradient(90deg, #4b2869 0%, #a64bf4 50%, #4b2869 100%);
+      background-size: 400px;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shine 2.5s linear infinite;
+    }
+    .note {
+      color: #6d3c9c;
+      text-align: center;
+      margin-bottom: 30px;
+      font-weight: 500;
+      font-size: 70%;
+    }
+    .form-group {
+      margin-bottom: 25px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    label {
+      display: block;
+      color: #4b2869;
+      margin-bottom: 8px;
+      font-weight: bold;
+      font-size: 1.1em;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #d8bfd8;
+      border-radius: 8px;
+      font-size: 1em;
+      transition: all 0.3s ease;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: #6d3c9c;
+      outline: none;
+      box-shadow: 0 0 8px rgba(109, 60, 156, 0.3);
+    }
+    .radio-group {
+      display: flex;
+      gap: 20px;
+      margin-top: 10px;
+    }
+    .radio-group label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: normal;
+      cursor: pointer;
+    }
+    input[type="radio"] {
+      width: auto;
+      accent-color: #6d3c9c;
+    }
+    .submit-btn {
+      background: linear-gradient(135deg, #6d3c9c, #8a4db8);
+      color: white;
+      padding: 15px 40px;
+      border-radius: 8px;
+      cursor: pointer;
+      border: none;
+      font-weight: bold;
+      transition: transform 0.2s ease;
+      display: block;
+      margin: 30px auto 10px auto;
+      font-size: 1.2em;
+      position: relative;
+      overflow: hidden;
+      background-clip: padding-box;
+      background-size: 400% 400%;
+      animation: shine 3s linear infinite;
+    }
+    .submit-btn::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, #4b2869 0%, #a64bf4 50%, #4b2869 100%);
+      background-size: 400%;
+      z-index: -1;
+      opacity: 0.3;
+      animation: shine 3s linear infinite;
+    }
+    .submit-btn:hover {
+      transform: translateY(-2px);
+    }
+    .small-note {
+      text-align: center;
+      color: #6d3c9c;
+      font-size: 0.9em;
+      margin-top: 10px;
+    }
+    #file-upload {
+      display: block;
+      padding: 12px;
+      border: 2px solid #d8bfd8;
+      border-radius: 8px;
+      background-color: #fff;
+      font-size: 1em;
+    }
+    #file-name {
+      text-align: left;
+      font-size: 0.9em;
+      color: #6d3c9c;
+      margin-top: 5px;
+    }
+    .select2-container--default .select2-selection--single {
+      height: 46px !important;
+      border: 2px solid #d8bfd8 !important;
+      border-radius: 8px !important;
+      padding: 8px 12px;
+      font-size: 1em;
+      display: flex;
+      align-items: center;
+    }
+    .select2-selection__arrow {
+      height: 100% !important;
+      top: 0 !important;
+      right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Join Our Growing Team at IceQuill Writers</h1>
+    <p class="note">
+      We're welcoming 25 new creative professional writers to join our team
+    </p>
+
+    <form id="applicationForm">
+      <div class="form-group">
+        <label for="fullName">Please enter your complete name</label>
+        <input type="text" id="fullName" name="fullName" required />
+      </div>
+
+      <div class="form-group">
+        <label for="country">Which country are you currently based in?</label>
+        <select id="country" name="country" required>
+          <option value="">Select Country</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="contentSpecialization">What type of content do you primarily specialize in?</label>
+        <input type="text" id="contentSpecialization" name="contentSpecialization" required />
+      </div>
+
+      <div class="form-group">
+        <label for="experience">How many years of experience do you have as a content writer?</label>
+        <input type="number" id="experience" name="experience" min="0" required />
+      </div>
+
+      <div class="form-group">
+        <label>Do you fully depend on AI for writing content?</label>
+        <div class="radio-group">
+          <label><input type="radio" name="ai" value="yes" required /> Yes</label>
+          <label><input type="radio" name="ai" value="no" /> No</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="tools">Which tools do you use for writing and editing?</label>
+        <textarea id="tools" name="tools" rows="3" required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="niche">Which niche do you write for the most confidently and effectively?</label>
+        <input type="text" id="niche" name="niche" required />
+      </div>
+
+      <div class="form-group">
+        <label for="availability">Are you available to work remotely for 6 hours daily?</label>
+        <input type="text" id="availability" name="availability" required />
+      </div>
+
+      <div class="form-group">
+        <label for="rate">We pay per project, not monthly. What is your preferred rate per word?</label>
+        <input type="number" id="rate" name="rate" step="0.01" required />
+      </div>
+
+      <div class="form-group">
+        <label for="file-upload">Upload your resume/portfolio</label>
+        <input type="file" id="file-upload" name="resume" accept=".pdf,.doc,.docx" multiple required />
+        <span id="file-name"></span>
+      </div>
+
+      <button type="submit" class="submit-btn">Send It Now!</button>
+      <p class="small-note">Note: The ad will show first. Please click again to apply.</p>
+    </form>
+  </div>
+
+  <!-- jQuery and Select2 -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+  <script>
+    // Populate country dropdown using select2
+    const countries = ["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan",
+      "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Brazil",
+      "Brunei", "Bulgaria", "Cambodia", "Cameroon", "Canada", "Chile", "China", "Colombia", "Costa Rica", "Croatia", "Cuba", "Cyprus",
+      "Czech Republic", "Denmark", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Estonia", "Ethiopia", "Finland", "France",
+      "Georgia", "Germany", "Ghana", "Greece", "Guatemala", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland",
+      "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kuwait", "Laos", "Latvia", "Lebanon", "Libya", "Lithuania",
+      "Luxembourg", "Madagascar", "Malaysia", "Maldives", "Malta", "Mexico", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Nepal",
+      "Netherlands", "New Zealand", "Nicaragua", "Nigeria", "North Korea", "Norway", "Oman", "Pakistan", "Panama", "Paraguay", "Peru", "Philippines",
+      "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Saudi Arabia", "Senegal", "Serbia", "Singapore", "Slovakia", "Slovenia",
+      "South Africa", "South Korea", "Spain", "Sri Lanka", "Sudan", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand",
+      "Trinidad and Tobago", "Tunisia", "Turkey", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay",
+      "Uzbekistan", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"];
+    
+    const countrySelect = $('#country');
+    countries.forEach(c => countrySelect.append(`<option value="${c}">${c}</option>`));
+    countrySelect.select2({ placeholder: "Select Country", width: '100%' });
+
+    // File upload names display
+    document.getElementById("file-upload").addEventListener("change", function(e) {
+      const names = Array.from(e.target.files).map(f => f.name).join(', ');
+      document.getElementById("file-name").textContent = names;
+    });
+
+    // Custom submission logic for the Apply button
+    const form = document.getElementById("applicationForm");
+    const submitBtn = form.querySelector(".submit-btn");
+    let adOpened = false;
+
+    submitBtn.addEventListener("click", function(e) {
+      // Check if the form is valid before proceeding
+      if (!form.checkValidity()) {
+        return; // Let HTML5 validation handle errors
+      }
+      
+      e.preventDefault();
+      if (!adOpened) {
+        // First click: open the ad link in a new tab
+        window.open("https://www.profitableratecpm.com/xd9h2pv5dg?key=1a88992ce2deea5db9a3f1240734414f");
+        adOpened = true;
+      } else {
+        // Hide the note element so the welcoming message doesn't show
+        const noteElement = document.querySelector(".note");
+        if (noteElement) {
+          noteElement.style.display = "none";
+        }
+        
+        // Second click: simulate form submission and update UI with confirmation message
+        form.innerHTML = `
+          <div style="text-align:center; padding: 40px;">
+            <svg viewBox="0 0 100 100" style="width:25%; height:auto; display:block; margin:0 auto;">
+              <defs>
+                <linearGradient id="modernTickGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#4b2869" />
+                  <stop offset="50%" stop-color="#a64bf4" />
+                  <stop offset="100%" stop-color="#4b2869" />
+                  <animate attributeName="offset" values="0;1;0" dur="2s" repeatCount="indefinite"/>
+                </linearGradient>
+                <linearGradient id="modernCircleGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#a64bf4" />
+                  <stop offset="50%" stop-color="#6d3c9c" />
+                  <stop offset="100%" stop-color="#a64bf4" />
+                  <animate attributeName="offset" values="0;1;0" dur="2s" repeatCount="indefinite"/>
+                </linearGradient>
+              </defs>
+              <path d="M20,55 L45,80 L80,30" fill="none" stroke="url(#modernTickGradient)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round">
+                <animate attributeName="stroke-dasharray" from="0,100" to="100,0" dur="1s" fill="freeze"/>
+              </path>
+              <circle cx="50" cy="50" r="45" fill="none" stroke="url(#modernCircleGradient)" stroke-width="2" stroke-dasharray="283" stroke-dashoffset="283">
+                <animate attributeName="stroke-dashoffset" from="283" to="0" dur="1s" fill="freeze"/>
+              </circle>
+            </svg>
+            <h2 style="color: #6d3c9c; margin: 20px 0;">We've Successfully Received Your Application.</h2>
+            <p style="font-size: 0.9em; color: #6d3c9c; margin-bottom: 20px;">
+              Our IceQuill Writers team will review your application and get in touch with you shortly.
+            </p>
+            <p style="color: #6d3c9c; margin-bottom: 10px;">In the meantime, Why not explore something Amazing?</p>
+            <a href="https://www.profitableratecpm.com/xd9h2pv5dg?key=1a88992ce2deea5db9a3f1240734414f" target="_blank" style="color: #6d3c9c; font-weight: bold; text-decoration: none;">Learn More...</a>
+          </div>
+        `;
+      }
+    });
+  </script>
+</body>
+</html>
